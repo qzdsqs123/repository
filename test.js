@@ -47,19 +47,19 @@ MongoClient.connect(mongoUrl, {useNewUrlParser:true}, function(err,client){
                 equal = equal > 15 ? 150 : parseInt(equal*10);
                 lose = lose > 15 ? 150 : parseInt(lose*10);
                 if(doc["result"] === "胜") {
-                    res[win].win_r.push(doc);
-                    res[equal].equal_w.push(doc);
-                    res[lose].lose_w.push(doc);
+                    res[win].win_r.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
+                    res[equal].equal_w.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
+                    res[lose].lose_w.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
                 }
                 if(doc["result"] === "平") {
-                    res[win].win_w.push(doc);
-                    res[equal].equal_r.push(doc);
-                    res[lose].lose_w.push(doc);
+                    res[win].win_w.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
+                    res[equal].equal_r.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
+                    res[lose].lose_w.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
                 }
                 if(doc["result"] === "负") {
-                    res[win].win_w.push(doc);
-                    res[equal].equal_w.push(doc);
-                    res[lose].lose_r.push(doc);
+                    res[win].win_w.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
+                    res[equal].equal_w.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
+                    res[lose].lose_r.push({"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]});
                 }
                 count++;
                 console.log(count);
@@ -89,7 +89,7 @@ MongoClient.connect(mongoUrl, {useNewUrlParser:true}, function(err,client){
                 wrong = res[i].win_w.length + res[i].equal_w.length + res[i].lose_w.length;
             let percent = 0;
             if(wrong + right !== 0) {
-                percent = right / wrong + right;
+                percent = right / (wrong + right);
             } else {
                 percent = "无记录";
             }
@@ -108,3 +108,6 @@ MongoClient.connect(mongoUrl, {useNewUrlParser:true}, function(err,client){
     // findById(server);
     // update(server);
 })
+
+
+//{"day":doc["day"],"time":doc["time"],"home":doc["home"],"score":doc["score"],"away":doc["away"]}
